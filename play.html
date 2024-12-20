@@ -21,18 +21,30 @@
       background-color: black;
     }
 
-    /* Remove the error message styles, so it doesn't display any errors */
+    /* Style for the error message */
     .error-message {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 0, 0, 0.8);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
       display: none;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
   <div id="player"></div>
+  <div class="error-message" id="errorMessage">This channel is unavailable!</div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const playerContainer = document.getElementById('player');
+      const errorMessage = document.getElementById('errorMessage');
 
       // Function to get query parameters
       function getQueryParam(param) {
@@ -55,15 +67,19 @@
           const channel = channels.find((ch) => ch.id === channelId);
 
           if (!channel) {
-            // If channel is not found, just exit
+            // If channel is not found, show the error message and exit
+            showErrorMessage("Channel not found!");
             return;
           }
 
+          // Change the title of the webpage to the channel name
+          document.title = `You Are Watching - ${channel.name}`;
+
           // Initialize the Clappr player with the channel URL
-          new Clappr.Player({
+          const player = new Clappr.Player({
             source: channel.url,
             parentId: "#player",
-            autoPlay: true,
+            autoPlay: true, // Ensure autoPlay is set to true
             mute: false,
             width: "100%",
             height: "100%",
@@ -73,10 +89,29 @@
               },
             },
           });
+
+          // Manually check if autoplay is working after player initialization
+          player.on(Clappr.Events.PLAYER_READY, () => {
+            player.play(); // Ensure playback starts when player is ready
+          });
+
+          player.on(Clappr.Events.PLAYER_ERROR, () => {
+            showErrorMessage("This channel is unavailable!");
+          });
         })
         .catch((err) => {
           console.error('Error loading channels:', err);
+          showErrorMessage("Error loading channel list!");
         });
+
+      // Function to show error message for 2 seconds
+      function showErrorMessage(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+        }, 2000);
+      }
     });
   </script>
 </body>
