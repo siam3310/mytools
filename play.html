@@ -6,24 +6,28 @@
   <title>You Are Watching</title>
   <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
   <style>
-    #player {
-      width: 100%;
+    /* Make the body and html elements take full width and height */
+    html, body {
       height: 100%;
-      max-width: 640px;
-      max-height: 360px;
-      margin: 20px auto;
+      margin: 0;
+      padding: 0;
       background-color: black;
     }
 
+    /* Make the player container full screen */
+    #player {
+      width: 100%;
+      height: 100%;
+      background-color: black;
+    }
+
+    /* Remove the error message styles, so it doesn't display any errors */
     .error-message {
-      color: white;
-      text-align: center;
-      margin-top: 20px;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1 style="text-align: center;">You Are Watching</h1>
   <div id="player"></div>
 
   <script>
@@ -40,8 +44,7 @@
       const channelId = getQueryParam('id');
 
       if (!channelId) {
-        // Show error if no channel ID is provided
-        playerContainer.innerHTML = '<p class="error-message">No channel selected!</p>';
+        // No need to show error if there's no channel ID; the player will not initialize
         return;
       }
 
@@ -52,8 +55,7 @@
           const channel = channels.find((ch) => ch.id === channelId);
 
           if (!channel) {
-            // Show error if the channel is not found
-            playerContainer.innerHTML = '<p class="error-message">Channel not found!</p>';
+            // If channel is not found, just exit
             return;
           }
 
@@ -64,7 +66,7 @@
             autoPlay: true,
             mute: false,
             width: "100%",
-            height: 500,
+            height: "100%",
             playback: {
               hlsjsConfig: {
                 debug: false, // Disable HLS.js debugging
@@ -73,9 +75,7 @@
           });
         })
         .catch((err) => {
-          // Show error if channels.json cannot be loaded
-          playerContainer.innerHTML = '<p class="error-message">Error loading channels!</p>';
-          console.error(err);
+          console.error('Error loading channels:', err);
         });
     });
   </script>
