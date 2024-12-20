@@ -15,12 +15,6 @@
       background-color: black;
     }
 
-    /* Hide loading spinner */
-    .clappr-loading-spinner {
-      display: none !important;
-    }
-
-    /* Error message style */
     .error-message {
       color: white;
       text-align: center;
@@ -32,56 +26,57 @@
   <h1 style="text-align: center;">You Are Watching</h1>
   <div id="player"></div>
 
-  <?php
-    // Fetch channel ID from URL
-    $channelId = isset($_GET['id']) ? $_GET['id'] : null;
-
-    // Load channels.json
-    $channelsFile = 'channels.json';
-    $channels = [];
-
-    if (file_exists($channelsFile)) {
-        $channels = json_decode(file_get_contents($channelsFile), true);
-    }
-
-    // Find the requested channel
-    $selectedChannel = null;
-    if ($channelId) {
-        foreach ($channels as $channel) {
-            if ($channel['id'] == $channelId) {
-                $selectedChannel = $channel;
-                break;
-            }
-        }
-    }
-  ?>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const playerContainer = document.getElementById('player');
 
-      <?php if (!$channelId): ?>
-        // No channel selected
+      // Function to get query parameters
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      // Get the channel ID from the URL
+      const channelId = getQueryParam('id');
+
+      if (!channelId) {
+        // Show error if no channel ID is provided
         playerContainer.innerHTML = '<p class="error-message">No channel selected!</p>';
-      <?php elseif (!$selectedChannel): ?>
-        // Channel not found
-        playerContainer.innerHTML = '<p class="error-message">Channel not found!</p>';
-      <?php else: ?>
-        // Initialize Clappr player with the selected channel URL
-        new Clappr.Player({
-          source: "<?php echo $selectedChannel['url']; ?>",
-          parentId: "#player",
-          autoPlay: true,
-          mute: false,
-          width: "100%",
-          height: 500,
-          playback: {
-            hlsjsConfig: {
-              debug: false // Disable HLS.js debugging
-            }
+        return;
+      }
+
+      // Fetch channels.json to get the channel list
+      fetch('channels.json')
+        .then((response) => response.json())
+        .then((channels) => {
+          const channel = channels.find((ch) => ch.id === channelId);
+
+          if (!channel) {
+            // Show error if the channel is not found
+            playerContainer.innerHTML = '<p class="error-message">Channel not found!</p>';
+            return;
           }
+
+          // Initialize the Clappr player with the channel URL
+          new Clappr.Player({
+            source: channel.url,
+            parentId: "#player",
+            autoPlay: true,
+            mute: false,
+            width: "100%",
+            height: 500,
+            playback: {
+              hlsjsConfig: {
+                debug: false, // Disable HLS.js debugging
+              },
+            },
+          });
+        })
+        .catch((err) => {
+          // Show error if channels.json cannot be loaded
+          playerContainer.innerHTML = '<p class="error-message">Error loading channels!</p>';
+          console.error(err);
         });
-      <?php endif; ?>
     });
   </script>
 </body>
