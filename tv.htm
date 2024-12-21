@@ -667,23 +667,6 @@
 
         // Call updateFavoritesList when settings modal is opened
         document.querySelector('.icon').addEventListener('click', updateFavoritesList);
-
-// double tap full screen 
-     // Double tap (or double click) for fullscreen
-let touchTimeout;
-video.addEventListener('touchstart', (e) => {
-    if (touchTimeout) {
-        clearTimeout(touchTimeout);
-        toggleFullscreen(); // Activate fullscreen if double-tap detected
-    } else {
-        touchTimeout = setTimeout(() => {
-            touchTimeout = null;
-        }, 300); // Timeout duration to distinguish between single and double tap
-    }
-});
-
-video.addEventListener('dblclick', toggleFullscreen); // For desktop: double-click to toggle fullscreen
-   
     </script>
 
     <style>
