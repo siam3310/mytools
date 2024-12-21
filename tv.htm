@@ -77,18 +77,6 @@
             opacity: 1;
         }
 
-        .center-play {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            color: white;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
         .video-wrapper:hover .center-play {
             opacity: 1;
         }
@@ -251,9 +239,6 @@
                 <source id="video-source" src="" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-            <div class="center-play">
-                <i class="fas fa-play"></i>
-            </div>
             <div class="custom-controls">
                 <button class="control-button" onclick="togglePlay()">
                     <i class="fas fa-play" id="play-icon"></i>
