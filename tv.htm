@@ -289,9 +289,51 @@
         </div>
     </div>
         <!-- Search Bar -->
-    <div class="search-bar">
-        <input type="text" id="search-input" class="search-input" placeholder="Search channels..." oninput="filterChannels()">
-    </div>
+<!-- Search Bar -->
+<div class="search-bar">
+    <input type="text" id="search-input" class="search-input" placeholder="Search channels..." oninput="filterChannels()">
+</div>
+
+<style>
+    .search-bar {
+        margin: 10px 0;
+        width: 98%;
+        max-width: 800px;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+</style>
+
+<script>
+    // Search system for filtering channels
+    function filterChannels() {
+        const searchInput = document.getElementById('search-input').value.toLowerCase();
+        const channelList = document.getElementById('channel-list');
+        const channelItems = channelList.getElementsByClassName('channel-item');
+
+        Array.from(channelItems).forEach(channelItem => {
+            const channelName = channelItem.querySelector('.channel-name').textContent.toLowerCase();
+            if (channelName.includes(searchInput)) {
+                channelItem.style.display = 'flex';
+            } else {
+                channelItem.style.display = 'none';
+            }
+        });
+    }
+</script>
+
     <div class="channel-container" id="channel-list"></div>
 
     <div class="settings-modal" id="settingsModal">
@@ -717,11 +759,5 @@
             border-radius: 8px;
         }
     </style>
-
-
-
-
-
-
 </body>
 </html>
