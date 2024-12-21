@@ -6,12 +6,20 @@
   },
   {
     "id": "2",
-    "name": "Tsports-Jadoo",
-    "url": "https://tmsbd.top/jig/All%20Channels/m3u8.php?id=t_sports&e=.m3u8"
+    "name": "Nagorik-Jadoo",
+    "url": "https://tiger-hub.vercel.app/Live_tv/Nagorik_tv(jadoo).m3u8"
   },
   {
     "id": "3",
+    "name": "Nagorik-Starshare",
+    "url": "https://cinebuzz.netfy.live/nagorik.m3u8"
+  },
+  {
+    "id": "4",
     "name": "Channel 3",
     "url": "http://example.com/stream3.m3u8"
   }
+
+
+  
 ]
