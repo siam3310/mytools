@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Movie Download Links Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a2e;
+      color: #fff;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #16213e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+    }
+    input {
+      background: #1e3a5f;
+      color: #fff;
+    }
+    button {
+      background: #0f3460;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: #533483;
+    }
+    .section {
+      margin-top: 20px;
+    }
+    .links-list {
+      margin-top: 10px;
+      padding: 10px;
+      background: #212a4c;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .links-list p {
+      margin: 5px 0;
+    }
+    .output {
+      background: #212a4c;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    .flex-row {
+      display: flex;
+      gap: 10px;
+    }
+    .flex-row button {
+      flex: 1;
+    }
+    .alert {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+    .alert.success {
+      background: #2dce89;
+    }
+    .alert.error {
+      background: #ff4d4d;
+    }
+    .copy-btn {
+      margin-top: 10px;
+      text-align: right;
+    }
+    .copy-btn button {
+      width: auto;
+      padding: 10px 20px;
+      background: #4caf50;
+    }
+    .copy-btn button:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Movie Download Links Generator</h1>
+
+    <!-- Movie Section -->
+    <div class="section">
+      <h2>Add Movie</h2>
+      <label for="movie-id">Movie ID</label>
+      <input type="text" id="movie-id" placeholder="Enter movie ID">
+
+      <label for="movie-name">Movie Name</label>
+      <input type="text" id="movie-name" placeholder="Enter movie name">
+    </div>
+
+    <!-- Download Links Section -->
+    <div class="section">
+      <h2>Add Download Link</h2>
+      <label for="quality">Quality</label>
+      <input type="text" id="quality" placeholder="Enter quality (e.g., 720p)">
+
+      <label for="link">Download Link</label>
+      <input type="text" id="link" placeholder="Enter download link">
+
+      <div class="flex-row">
+        <button onclick="addDownloadLink()">Add Link</button>
+        <button onclick="resetDownloadLinks()">Reset Links</button>
+      </div>
+
+      <div class="links-list" id="current-links">
+        <h3>Current Links:</h3>
+        <p>No links added yet.</p>
+      </div>
+    </div>
+
+    <!-- Add Movie -->
+    <div class="section">
+      <button onclick="addMovie()">Add Movie</button>
+    </div>
+
+    <!-- Alert Box -->
+    <div id="alert-box"></div>
+
+    <!-- JSON Output -->
+    <div class="section">
+      <h2>Generated JSON</h2>
+      <div class="output" id="json-output"></div>
+      <div class="copy-btn">
+        <button onclick="copyJSON()">Copy JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let movies = [];
+    let currentLinks = [];
+
+    // Show alert
+    function showAlert(message, type) {
+      const alertBox = document.getElementById("alert-box");
+      alertBox.innerHTML = `<div class="alert ${type}">${message}</div>`;
+      setTimeout(() => alertBox.innerHTML = "", 3000);
+    }
+
+    // Add download link
+    function addDownloadLink() {
+      const quality = document.getElementById("quality").value;
+      const link = document.getElementById("link").value;
+
+      if (!quality || !link) {
+        showAlert("Please fill in both quality and link.", "error");
+        return;
+      }
+
+      currentLinks.push({ quality, link });
+      updateLinksList();
+      showAlert(`Link (${quality}) added successfully!`, "success");
+      document.getElementById("quality").value = "";
+      document.getElementById("link").value = "";
+    }
+
+    // Reset download links
+    function resetDownloadLinks() {
+      currentLinks = [];
+      updateLinksList();
+      showAlert("All links reset successfully!", "success");
+    }
+
+    // Update the current links list
+    function updateLinksList() {
+      const linksList = document.getElementById("current-links");
+      if (currentLinks.length === 0) {
+        linksList.innerHTML = "<p>No links added yet.</p>";
+        return;
+      }
+      linksList.innerHTML = currentLinks.map(link => `<p>${link.quality}: ${link.link}</p>`).join("");
+    }
+
+    // Add movie to the list
+    function addMovie() {
+      const id = document.getElementById("movie-id").value;
+      const fileName = document.getElementById("movie-name").value;
+
+      if (!id || !fileName) {
+        showAlert("Please fill in both movie ID and name.", "error");
+        return;
+      }
+
+      movies.push({
+        id,
+        file_name: fileName,
+        download_links: currentLinks
+      });
+
+      document.getElementById("movie-id").value = "";
+      document.getElementById("movie-name").value = "";
+      currentLinks = [];
+      updateLinksList();
+      updateJSONOutput();
+      showAlert("Movie added successfully!", "success");
+    }
+
+    // Update JSON output
+    function updateJSONOutput() {
+      const output = document.getElementById("json-output");
+      const formattedMovies = movies.map(movie => JSON.stringify(movie, null, 2)).join(",\n");
+      output.textContent = formattedMovies;
+    }
+
+    // Copy JSON to clipboard
+    function copyJSON() {
+      const jsonOutput = document.getElementById("json-output").textContent;
+      navigator.clipboard.writeText(jsonOutput).then(() => {
+        showAlert("JSON copied to clipboard!", "success");
+      });
+    }
+  </script>
+</body>
+</html>
