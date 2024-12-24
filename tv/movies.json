@@ -1,12 +1,28 @@
 [
   {
     "id": "857598",
-    "file_name": "Pushpa-1080P",
-    "download_link": "https://example.com/downloads/movie1.mp4"
+    "file_name": "pushpa",
+    "download_links": [
+      {"quality": "720p",
+        "link": "https://example.com/downloads/movie1_720p.mp4"},
+      {"quality": "1080p",
+        "link": "https://example.com/downloads/movie1_1080p.mp4"},
+      {"quality": "4K",
+        "link": "https://example.com/downloads/movie1_4k.mp4"}
+    ]
   },
   {
     "id": "1160018",
-    "file_name": "Movie Title 2",
-    "download_link": "https://example.com/downloads/movie2.mp4"
+    "file_name": "মুভি ২",
+    "download_links": [
+      {
+        "quality": "480p",
+        "link": "https://example.com/downloads/movie2_480p.mp4"
+      },
+      {
+        "quality": "1080p",
+        "link": "https://example.com/downloads/movie2_1080p.mp4"
+      }
+    ]
   }
 ]
