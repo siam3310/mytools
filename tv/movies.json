@@ -1,14 +1,20 @@
 [
   {
     "id": "857598",
-    "file_name": "pushpa",
+    "file_name": "Pushpa",
     "download_links": [
-      {"quality": "720p",
-        "link": "https://example.com/downloads/movie1_720p.mp4"},
-      {"quality": "1080p",
-        "link": "https://example.com/downloads/movie1_1080p.mp4"},
-      {"quality": "4K",
-        "link": "https://example.com/downloads/movie1_4k.mp4"}
+      {
+        "quality": "720p",
+        "link": "https://example.com/downloads/pushpa_720p.mp4"
+      },
+      {
+        "quality": "1080p",
+        "link": "https://example.com/downloads/pushpa_1080p.mp4"
+      },
+      {
+        "quality": "4K",
+        "link": "https://example.com/downloads/pushpa_4k.mp4"
+      }
     ]
   },
   {
@@ -25,10 +31,18 @@
       }
     ]
   },
-
-
-
-
-
-  
+  {
+    "id": "123456",
+    "file_name": "Example Movie",
+    "download_links": [
+      {
+        "quality": "720p",
+        "link": "https://example.com/downloads/example_720p.mp4"
+      },
+      {
+        "quality": "1080p",
+        "link": "https://example.com/downloads/example_1080p.mp4"
+      }
+    ]
+  }
 ]
