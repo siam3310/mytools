@@ -1,0 +1,30 @@
+[
+  {
+    "id": 946310,
+    "name": "Pushpa 2",
+    "sources": [
+      {
+        "quality": "1080p",
+        "link": "https://example.com/source1/1080p"
+      },
+      {
+        "quality": "720p",
+        "link": "https://example.com/source1/720p"
+      }
+    ]
+  },
+  {
+    "id": 67890,
+    "name": "Example Movie 2",
+    "sources": [
+      {
+        "quality": "4K",
+        "link": "https://example.com/source2/4k"
+      },
+      {
+        "quality": "1080p",
+        "link": "https://example.com/source2/1080p"
+      }
+    ]
+  }
+]
