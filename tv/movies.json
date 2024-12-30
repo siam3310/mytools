@@ -15,20 +15,6 @@
         "quality": "4K",
         "link": "https://example.com/downloads/pushpa_4k.mp4"
       }
-    ],
-    "watch_links": [
-      {
-        "quality": "720p",
-        "link": "https://example.com/watch/pushpa_720p"
-      },
-      {
-        "quality": "1080p",
-        "link": "https://example.com/watch/pushpa_1080p"
-      },
-      {
-        "quality": "4K",
-        "link": "https://example.com/watch/pushpa_4k"
-      }
     ]
   },
   {
@@ -43,16 +29,6 @@
         "quality": "1080p",
         "link": "https://example.com/downloads/movie2_1080p.mp4"
       }
-    ],
-    "watch_links": [
-      {
-        "quality": "480p",
-        "link": "https://example.com/watch/movie2_480p"
-      },
-      {
-        "quality": "1080p",
-        "link": "https://example.com/watch/movie2_1080p"
-      }
     ]
   },
   {
@@ -66,16 +42,6 @@
       {
         "quality": "1080p",
         "link": "https://example.com/downloads/example_1080p.mp4"
-      }
-    ],
-    "watch_links": [
-      {
-        "quality": "720p",
-        "link": "https://example.com/watch/example_720p"
-      },
-      {
-        "quality": "1080p",
-        "link": "https://example.com/watch/example_1080p"
       }
     ]
   }
