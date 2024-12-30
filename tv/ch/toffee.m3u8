@@ -1,0 +1,8 @@
+#EXTM3U
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2048000,RESOLUTION=1280x720
+#EXT-X-VERSION:3
+#EXT-X-MEDIA-SEQUENCE:0
+#EXT-X-ALLOW-CACHE:YES
+#EXT-X-TARGETDURATION:11
+#EXTINF:4, no desc
+[  {    "name": "BAN vs AFG VIP",    "link": "https://mprod-cdn.toffeelive.com/live/match-2/index.m3u8",    "logo": "https://images.toffeelive.com/images/program/208144/logo/240x240/mobile_logo_753607001730650681.png",    "origin": "https://mprod-cdn.toffeelive.com",    "referrer": "",    "userAgent": "Toffee (Linux;Android 14) AndroidXMedia3/1.1.1/64103898/4d2ec9b8c7534adc",    "cookie": "Edge-Cache-Cookie=URLPrefix=aHR0cHM6Ly9tcHJvZC1jZG4udG9mZmVlbGl2ZS5jb20v:Expires=1731378687:KeyName=prod_live_events:Signature=dbuEP4LJKl1_5a7VTe_85Qh3ztcyJYhbRZNMS0KseNDRbPZcDE4jrT4_UmsHiU4Ne8UwShn2WYL_F7W61XloCw",    "drmScheme": "",    "drmLicense": ""  }]
