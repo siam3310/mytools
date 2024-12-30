@@ -15,11 +15,38 @@
     "url": "https://cinebuzz.netfy.live/nagorik.m3u8"
   },
   {
-    "id": "4",
-    "name": "Channel 3",
-    "url": "http://example.com/stream3.m3u8"
+    "id": "5",
+    "name": "GTV (New)",
+    "url": "https://iptvcable.netlify.app/Altogether-007/GaziTv.m3u8"
+  },
+  {
+    "id": "6",
+    "name": "GTV (New)",
+    "url": "https://stream.iptvbd.xyz/Gazi-Tv/tracks-v1/index.fmp4.m3u8"
+  },
+  {
+    "id": "7",
+    "name": "GTV (New)",
+    "url": "https://pc.top10bhaluka.com/wp-image/stream.php?id=GTV&e=.m3u8"
+  },
+  {
+    "id": "8",
+    "name": "Tsports",
+    "url": "https://pc.top10bhaluka.com/wp-image/stream.php?id=T-SPORTS&e=.m3u8"
+  },
+  {
+    "id": "9",
+    "name": "LIVE-SPORTS",
+    "url": "https://pc.top10bhaluka.com/wp-image/stream.php?id=LIVE-SPORTS&e=.m3u8"
+  },
+  {
+    "id": "10",
+    "name": "Nagorik",
+    "url": "https://stream.iptvbd.xyz/nagorik/tracks-v1/index.fmp4.m3u8"
+  },
+  {
+    "id": "11",
+    "name": "Tsports (New)",
+    "url": "https://your-abbu.pages.dev/live.m3u8"
   }
-
-
-  
 ]
