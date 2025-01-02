@@ -1,36 +1,9 @@
 [
   {
     "id": 1,
-    "title": "Kingdom of the Planet of the Apes",
-    "year": 2024,
-    "tag": "Bangla-Dubb",
-    "link": "/kotp.html"
-  },
-  {
-    "id": 2,
-    "title": "Movie Title 2",
-    "year": 2024,
-    "tag": "English",
-    "link": "/movie2.html"
-  },
-  {
-    "id": 3,
-    "title": "Movie Title 3",
-    "year": 2024,
-    "tag": "Hindi",
-    "link": "/movie3.html"
-  },
-  {
-    "id": 4,
-    "name": "Movie Four",
-    "year": 2023,
+    "name": "Movie One",
+    "year": 2021,
     "language": "Hindi"
-  },
-  {
-    "id": 3,
-    "name": "Movie Three",
-    "year": 2023,
-    "language": "Bangla"
   },
   {
     "id": 2,
@@ -39,15 +12,21 @@
     "language": "English"
   },
   {
-    "id": 1,
-    "name": "Movie One",
-    "year": 2021,
+    "id": 3,
+    "name": "Movie Three",
+    "year": 2023,
+    "language": "Bangla"
+  },
+  {
+    "id": 4,
+    "name": "Movie Four",
+    "year": 2023,
     "language": "Hindi"
   },
-    {
+  {
     "id": 5,
     "name": "Movie Five",
     "year": 2024,
     "language": "English"
-  },
+  }
 ]
