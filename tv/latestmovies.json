@@ -3,30 +3,16 @@
     "id": 1,
     "name": "Movie One",
     "year": 2021,
-    "language": "Hindi"
+    "language": "Hindi",
+    "link": "https://example.com/movie-one"
   },
   {
     "id": 2,
     "name": "Movie Two",
     "year": 2022,
-    "language": "English"
+    "language": "English",
+    "link": "https://example.com/movie-two"
   },
-  {
-    "id": 3,
-    "name": "Movie Three",
-    "year": 2023,
-    "language": "Bangla"
-  },
-  {
-    "id": 4,
-    "name": "Movie Four",
-    "year": 2023,
-    "language": "Hindi"
-  },
-  {
-    "id": 5,
-    "name": "Movie Five",
-    "year": 2024,
-    "language": "English"
-  }
+
+
 ]
