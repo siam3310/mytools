@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Generator</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* Form container */
+    .form-container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-container h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .form-container input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      font-size: 1rem;
+      background: #2a2a2a;
+      color: #ffffff;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background: #007BFF;
+      border: none;
+      color: #ffffff;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background: #0056b3;
+    }
+
+    /* Movie container */
+    .movie-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 600px) {
+      .movie-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+
+    .movie-card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .movie-card h3 {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      color: #ffffff;
+    }
+
+    .movie-card p {
+      font-size: 0.95rem;
+      margin: 5px 0;
+      color: #aaaaaa;
+    }
+
+    .movie-card a {
+      display: inline-block;
+      padding: 10px;
+      background: #007BFF;
+      color: #ffffff;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      margin-top: 10px;
+    }
+
+    .movie-card a:hover {
+      background: #0056b3;
+    }
+
+    .movie-card a:active {
+      background: #00408a;
+    }
+
+    /* JSON code display */
+    .json-container {
+      margin-top: 30px;
+      padding: 20px;
+      background: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .json-container pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 5px;
+      color: #f1f1f1;
+      font-size: 0.9rem;
+    }
+
+    .copy-btn {
+      width: 100%;
+      padding: 10px;
+      background: #28a745;
+      border: none;
+      color: #ffffff;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .copy-btn:hover {
+      background: #218838;
+    }
+
+    /* Notification popup */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .notification.show {
+      display: block;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Movie Generator</h1>
+
+  <!-- Form for Adding Movies -->
+  <div class="form-container">
+    <h2>Add a New Movie</h2>
+    <input type="text" id="movieName" placeholder="Movie Name" required />
+    <input type="number" id="movieYear" placeholder="Release Year" required />
+    <input type="text" id="movieLanguage" placeholder="Language" required />
+    <input type="url" id="movieLink" placeholder="Movie Link" required />
+    <button onclick="addMovie()">Add Movie</button>
+  </div>
+
+  <!-- Movie Display Area -->
+  <div class="movie-container" id="movieContainer"></div>
+
+  <!-- JSON Code Display Area -->
+  <div class="json-container" id="jsonContainer" style="display: none;">
+    <h3>Generated Movie JSON:</h3>
+    <pre id="jsonCode"></pre>
+    <button class="copy-btn" onclick="copyToClipboard()">Copy JSON</button>
+  </div>
+
+  <!-- Notification Popup -->
+  <div class="notification" id="copyNotification">JSON Copied!</div>
+
+  <script>
+    const movies = [];
+
+    // Function to add a movie to the list
+    function addMovie() {
+      const name = document.getElementById('movieName').value;
+      const year = document.getElementById('movieYear').value;
+      const language = document.getElementById('movieLanguage').value;
+      const link = document.getElementById('movieLink').value;
+
+      if (!name || !year || !language || !link) {
+        alert('Please fill all the fields!');
+        return;
+      }
+
+      const newMovie = {
+        id: movies.length + 1,
+        name,
+        year,
+        language,
+        link,
+      };
+
+      movies.push(newMovie);
+
+      document.getElementById('movieName').value = '';
+      document.getElementById('movieYear').value = '';
+      document.getElementById('movieLanguage').value = '';
+      document.getElementById('movieLink').value = '';
+
+      displayMovies();
+      showJsonCode();
+    }
+
+    // Function to display movies
+    function displayMovies() {
+      const container = document.getElementById('movieContainer');
+      container.innerHTML = '';
+
+      movies.forEach(movie => {
+        const card = document.createElement('div');
+        card.classList.add('movie-card');
+        card.innerHTML = `
+          <h3>${movie.name}</h3>
+          <p>Year: ${movie.year}</p>
+          <p>Language: ${movie.language}</p>
+          <a href="${movie.link}" target="_blank">Watch Now</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Function to show the JSON code
+    function showJsonCode() {
+      const jsonContainer = document.getElementById('jsonContainer');
+      const jsonCode = document.getElementById('jsonCode');
+      const jsonString = JSON.stringify(movies, null, 2);
+
+      jsonCode.textContent = jsonString;
+      jsonContainer.style.display = 'block';
+    }
+
+    // Function to copy the JSON to clipboard
+    function copyToClipboard() {
+      const jsonCode = document.getElementById('jsonCode');
+      const range = document.createRange();
+      range.selectNode(jsonCode);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      showNotification();
+    }
+
+    // Function to show the notification popup
+    function showNotification() {
+      const notification = document.getElementById('copyNotification');
+      notification.classList.add('show');
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
