@@ -1,37 +1,12 @@
-[
-  {
-    "id": 1,
-    "name": "Movie One",
-    "year": 2021,
-    "language": "Hindi",
-    "link": "https://example.com/movie-one"
-  },
-  {
-    "id": 2,
-    "name": "Movie Two",
-    "year": 2022,
-    "language": "English",
-    "link": "https://example.com/movie-two"
-  },
-  {
-    "id": 3,
-    "name": "Movie Three",
-    "year": 2023,
-    "language": "Bangla",
-    "link": "https://example.com/movie-three"
-  },
-  {
-    "id": 4,
-    "name": "Movie Four",
-    "year": 2023,
-    "language": "Hindi",
-    "link": "https://example.com/movie-four"
-  },
-  {
-    "id": 5,
-    "name": "Movie Five",
-    "year": 2024,
-    "language": "English",
-    "link": "https://example.com/movie-five"
-  }
-]
+{
+  "movieIds": [
+    { "id": 857598, "name": "Movie 1" },
+    { "id": 854545, "name": "Movie 2" },
+    { "id": 857343, "name": "Movie 3" }
+  ],
+  "tvShowIds": [
+    { "id": 1431, "name": "TV Show 1" },
+    { "id": 1668, "name": "TV Show 2" },
+    { "id": 1412, "name": "TV Show 3" }
+  ]
+}
