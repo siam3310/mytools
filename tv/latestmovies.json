@@ -1,12 +1,8 @@
 {
   "movieIds": [
-    { "id": 857598, "name": "Movie 1" },
-    { "id": 854545, "name": "Movie 2" },
-    { "id": 1160018, "name": "Movie 3" }
+
   ],
   "tvShowIds": [
-    { "id": 1431, "name": "TV Show 1" },
-    { "id": 1668, "name": "TV Show 2" },
-    { "id": 1412, "name": "TV Show 3" }
+    { "id": 281164, "name": "Black-money-BD" }
   ]
 }
