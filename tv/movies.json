@@ -1,44 +1,24 @@
 [
   {
-    "id": "857598",
-    "file_name": "Pushpa",
+    "id": "281164",
+    "file_name": "Black Money - Series",
     "download_links": [
       {
-        "quality": "720p",
-        "link": "https://example.com/downloads/pushpa_720p.mp4"
-      },
-      {
-        "quality": "1080p",
-        "link": "https://example.com/downloads/pushpa_1080p.mp4"
-      },
-      {
-        "quality": "4K",
-        "link": "https://example.com/downloads/pushpa_4k.mp4"
+        "quality": "720p-Season-1",
+        "link": "https://pixeldrain.com/api/file/nZ6WEKt7?download"
       }
     ],
     "watch_links": [
       {
-        "quality": "720p",
-        "link": "https://example.com/watch/pushpa_720p"
-      },
-      {
-        "quality": "1080p",
-        "link": "https://example.com/watch/pushpa_1080p"
-      },
-      {
-        "quality": "4K",
-        "link": "https://example.com/watch/pushpa_4k"
+        "quality": "720p-Season-1",
+        "link": "https://freecatvold.pages.dev/gdplayer?player=plyr&provider=rand&format=video%2Fmp4&link=https://pixeldrain.com/api/file/nZ6WEKt7?download"
       }
     ]
   },
   {
-    "id": "1160018",
-    "file_name": "মুভি ২",
+    "id": "1400806",
+    "file_name": "Wakt - Dui Shaw",
     "download_links": [
-      {
-        "quality": "480p",
-        "link": "https://example.com/downloads/movie2_480p.mp4"
-      },
       {
         "quality": "1080p",
         "link": "https://example.com/downloads/movie2_1080p.mp4"
@@ -46,15 +26,17 @@
     ],
     "watch_links": [
       {
-        "quality": "480p",
-        "link": "https://example.com/watch/movie2_480p"
-      },
-      {
         "quality": "1080p",
         "link": "https://example.com/watch/movie2_1080p"
       }
     ]
   },
+
+
+
+
+
+  
   {
     "id": "123456",
     "file_name": "Example Movie",
