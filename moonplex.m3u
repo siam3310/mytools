@@ -1,0 +1,46 @@
+#EXTM3U
+
+#EXTINF:-1 tvg-logo="img/logo/Sony_Max.png", Sony Max
+http://kst.moonplex.net:8080/CH1/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/t-sports.jpg", T Sports
+http://kst.moonplex.net:8080/CH2/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/star-jalsha.jpg", Star Jalsha
+http://kst.moonplex.net:8080/CH3/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/zee-bangla.jpg", Zee Bangla
+http://kst.moonplex.net:8080/CH4/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/Deepto-tv-live.png", Deepto TV
+http://kst.moonplex.net:8080/CH5/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/channel9-hd.jpg", Channel 9 HD
+http://kst.moonplex.net:8080/CH6/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/Ekhon_Logo.png", Ekhon TV
+http://kst.moonplex.net:8080/CH7/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/BBC-CBeebies.png", BBC CBeebies
+http://kst.moonplex.net:8080/CH8/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/Discovery-channel.png", Discovery Channel
+http://kst.moonplex.net:8080/CH9/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/ARY-News.jpg", ARY News
+http://kst.moonplex.net:8080/CH10/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/BBC_Earth_logo.png", BBC Earth
+http://kst.moonplex.net:8080/CH11/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/duronto-tv.jpg", Duronto TV
+http://kst.moonplex.net:8080/CH12/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/9xm.jpg", 9XM
+http://kst.moonplex.net:8080/CH13/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/Al-Jazeera.png", Al Jazeera
+http://kst.moonplex.net:8080/CH14/index.m3u8
+
+#EXTINF:-1 tvg-logo="img/logo/cnn.png", CNN
+http://kst.moonplex.net:8080/CH15/index.m3u8
