@@ -1,0 +1,412 @@
+<head><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/shaka-player@4.13.3/dist/shaka-player.ui.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.13.3/dist/controls.min.css">
+<style type="text/css">
+  .shaka-video {
+    width: 100%;
+    height: 100%;
+    overflow: hidden
+  }
+</style>
+</head>
+<body>
+  <div data-shaka-player-container class="shaka-video-container" shaka-controls="true">
+    <video autoplay data-shaka-player id="video" class="shaka-video"></video>
+  </div>
+
+    <p class="control-button stream-button" onclick="toggleStream()"></p>
+  
+
+  <script>
+    let player; // Global Shaka Player instance
+    let ui; // Global Shaka UI instance
+    const videoElement = document.getElementById('video');
+    let previousSettings = {
+      playbackRate: 1, // Default playback rate
+      muted: true // Default to muted
+    };
+    // Device detection function for controls
+    function isMobile() {
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+    }
+    // Stream Information
+    const channelstreamInfo = {
+      streamUrl: "https://live3.shoq.com.pk/live/eds/Geo_Super/DASH/Geo_Super.mpd",
+      clearKeys: {
+        "7641daa5bacfbb61936c40a221c9e78e": "5732dd242f28338e909dc06cb1a1e5a2"
+      },
+      authBearer: "",
+      streamPoster: "https://upload.wikimedia.org/wikipedia/commons/5/52/ICC-Champions-Trophy-2025-Logo.jpg"
+    };
+    // Initialize Shaka Player
+    async function initializePlayer() {
+      const videoContainer = document.querySelector('.shaka-video-container');
+      const videoElement = document.getElementById('video');
+      // Set poster image
+      videoElement.poster = channelstreamInfo.streamPoster;
+      // Video settings
+      videoElement.muted = true; // Default to muted
+      videoElement.autoplay = true;
+      videoElement.controls = false;
+      // Restore settings
+      videoElement.playbackRate = previousSettings.playbackRate;
+      videoElement.muted = previousSettings.muted;
+      // Store changes during playback
+      videoElement.addEventListener('ratechange', () => {
+        previousSettings.playbackRate = videoElement.playbackRate;
+      });
+      videoElement.addEventListener('volumechange', () => {
+        previousSettings.muted = videoElement.muted;
+      });
+      // Create Shaka Player instance
+      player = new shaka.Player();
+      // UI Configuration
+      const uiConfig = {
+        trackLabelFormat: shaka.ui.Overlay.TrackLabelFormat.LANGUAGE,
+        textTrackLabelFormat: shaka.ui.Overlay.TrackLabelFormat.LANGUAGE,
+        fadeDelay: 0,
+        doubleClickForFullscreen: false,
+        singleClickForPlayAndPause: false,
+        enableKeyboardPlaybackControls: true,
+        enableFullscreenOnRotation: false,
+        forceLandscapeOnFullscreen: true,
+        enableTooltips: false,
+        keyboardSeekDistance: 5,
+        keyboardLargeSeekDistance: 60,
+        //fullScreenElement: this.videoContainer_,
+        preferDocumentPictureInPicture: false,
+        showAudioChannelCountVariants: true,
+        seekOnTaps: navigator.maxTouchPoints > 0,
+        seekOnTaps: false, // Disable seeking on tap
+        tapSeekDistance: 10,
+        refreshTickInSeconds: 0.125,
+        displayInVrMode: false,
+        defaultVrProjectionMode: 'equirectangular',
+        setupMediaSession: true,
+        preferVideoFullScreenInVisionOS: false,
+        showAudioCodec: true,
+        showVideoCodec: true,
+        addSeekBar: true,
+        addBigPlayButton: true,
+        customContextMenu: true,
+        castReceiverAppId: '',
+        castAndroidReceiverCompatible: false,
+        clearBufferOnQualityChange: false,
+        showUnbufferedStart: false,
+        // addBigPlayButtonInPausedState: true,
+        controlPanelElements: ['time_and_duration', 'mute', 'volume', 'rewind', 'fast_forward', 'play_pause', 'spacer', 'playback_rate', 'quality', 'picture_in_picture', 'fullscreen', 'overflow_menu'],
+        overflowMenuButtons: ['quality',
+          //'resolution',
+          'picture_in_picture', 'airplay', 'cast', 'statistics', 'language', 'playback_rate', 'captions',
+          //'save_frame',
+          'save_video_frame', 'loop'
+        ],
+        contextMenuElements: ['mute', 'picture_in_picture', 'statistics', 'save_video_frame', 'loop'],
+        //statisticsVisible: true, // Not Working 
+        playbackRates: [0.5, 0.75, 1, 1.05, 1.1, 1.25, 1.5, 1.75, 2, 2.5, 3],
+        fastForwardRates: [1],
+        rewindRates: [1],
+        volumeBarColors: {
+          base: 'rgba(255, 255, 255, 0.54)',
+          level: 'rgb(255, 255, 255)',
+        },
+        seekBarColors: {
+          base: 'rgba(255, 255, 255, 0.3)',
+          buffered: 'rgba(255, 255, 255, 0.54)',
+          played: 'rgb(255, 0, 51)'
+        }
+      };
+      // Customize controls based on device type
+      // Customize controls based on device type
+      if (isMobile()) {
+        console.log("Mobile device detected. Adjusting UI controls...");
+        uiConfig.addBigPlayButton = true;
+        // Only remove volume control on mobile
+        // Remove volume and play_pause controls on mobile
+        uiConfig.controlPanelElements = uiConfig.controlPanelElements.filter(
+          (name) => name !== 'volume' && name !== 'play_pause');
+      } else {
+        console.log("Desktop device detected. Full control panel enabled.");
+      }
+      // Initialize UI
+      ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
+      await player.attach(videoElement);
+      ui.configure(uiConfig);
+      ui.getControls();
+      // Add the skip functionality here, after UI is initialized 
+      // Add the skip functionality here, after UI is initialized 
+      // Add the skip functionality here, after UI is initialized 
+      const rewindButton = document.querySelector('.shaka-rewind-button');
+      const fastForwardButton = document.querySelector('.shaka-fast-forward-button');
+      const skipDuration = 5;
+      // Remove default click listeners
+      rewindButton.replaceWith(rewindButton.cloneNode(true));
+      fastForwardButton.replaceWith(fastForwardButton.cloneNode(true));
+      // Get the new button references
+      const newRewindButton = document.querySelector('.shaka-rewind-button');
+      const newFastForwardButton = document.querySelector('.shaka-fast-forward-button');
+      // Add our custom listeners
+      newRewindButton.addEventListener('click', () => {
+        const currentTime = video.currentTime;
+        video.currentTime = Math.max(0, currentTime - skipDuration);
+      });
+      newFastForwardButton.addEventListener('click', () => {
+        const currentTime = video.currentTime;
+        video.currentTime = Math.min(video.duration, currentTime + skipDuration);
+      });
+  
+      // Store and restore playback rate
+      let currentRate = 1;
+      video.addEventListener('ratechange', () => {
+        if (!video.paused) {
+          currentRate = video.playbackRate;
+        }
+      });
+      video.addEventListener('play', () => {
+        setTimeout(() => {
+          video.playbackRate = currentRate;
+        }, 0);
+      });
+      // DRM Configuration
+      player.configure({
+        abr: {
+          enabled: true, // Automatically adjust based on network bandwidthUpgradeTarget: 0.8,  // Upgrade only if 80% of the next bitrate is supported bandwidthDowngradeTarget: 0.98, // Downgrade if bandwidth falls below 98% of the current quality
+          bandwidthUpgradeTarget: 1.2,
+          switchInterval: 8, // How often to check for quality switches
+          //safetyFactor: 0.35,        // Conservative bandwidth estimation // Not Working   
+          useNetworkInformation: true,
+          // This is key for your requirement:
+          restrictions: {
+            //fastSwitching: false   // Prevents immediate quality switches// Not Working   
+          }
+        },
+        //textTrackDefaults: {    // Not Working 
+        //backgroundColor: '#ffffff',  
+        //color: '#000000', // Black text
+        //fontSize: '50px',
+        //fontFamily: 'Arial, sans-serif',
+        //edgeStyle: 'uniform', // Adds outline to text for better visibility
+        // windowColor: '#000000', // Background window color
+        //windowOpacity: 0.5
+        //},
+        streaming: {
+          liveSync: {
+            enabled: false, // Enables live sync
+            //margin: 2,      // (optional) Seconds behind the live edge to target
+          },
+          //loadMode: 'instant', // Fastest stream loading // Not Working 
+          bufferingGoal: 60, // Buffer up to 15 seconds ahead, Increase initial buffer to handle high bitrate
+          rebufferingGoal: 1, // Start playing when we have 3 seconds (for fast start) Allow a slightly larger rebuffering window
+          bufferBehind: 120, // Retain a reasonable amount of buffer behind
+          lowLatencyMode: true, // Enable low-latency for faster load
+          //smallGapLimit: 0.5, // Smooth over minor network delays // Not Working 
+          inaccurateManifestTolerance: 3, // Tolerance for manifest timing inaccuracies
+          // Aggressive segment prefetch settings
+          //prefetchSegmentLimit: 5,    // Prefetch up to 5 segments ahead // Not Working 
+          retryParameters: {
+            maxAttempts: 5, // More retry attempts
+            timeout: 10000, // 10 second timeout
+            baseDelay: 100, // Start with small delay
+            backoffFactor: 1.5 // Don't back off too aggressively
+          }
+        },
+        manifest: {
+          dash: {
+            autoCorrectDrift: true,
+          },
+          //minBufferTime: 2,  // Reduce the minimum required buffer for quicker startup before starting // Not Working 
+          retryParameters: {
+            maxAttempts: 5, // More retry attempts for manifest
+            timeout: 5000, // 5 second timeout
+            baseDelay: 100, // Quick initial retry
+            backoffFactor: 1.5
+          },
+          retryParameters: {
+            maxAttempts: 5, // Maximum number of retry attempts before giving up completely
+            timeout: 5000, // Maximum time (in milliseconds) to wait for each attempt before considering it failed
+            baseDelay: 100, // Initial delay (in milliseconds) before first retry attempt
+            backoffFactor: 1.5 // Multiplier that increases delay between consecutive retries
+            // Example: 1s → 2s → 4s between retries
+          },
+          // Faster manifest updates for live
+          //updateInterval: 5          // Update manifest every 5 seconds // Not Working 
+        },
+        // networking: {   // Not Working 
+        //preserveBufferSizeOnSeek: true,  // Keep buffer when user seeks
+        // allowCrossSiteCredentials: true, // Enable cross-origin credentials
+        //	   crossOriginCredentials: true
+        // },
+        drm: {
+          clearKeys: channelstreamInfo.clearKeys
+        }
+      });
+      // Authorization Header (if needed)
+      const networkingEngine = player.getNetworkingEngine();
+      networkingEngine.clearAllRequestFilters();
+      networkingEngine.registerRequestFilter((type, request) => {
+        if (channelstreamInfo.authBearer) {
+          request.headers['Authorization'] = `Bearer ${channelstreamInfo.authBearer}`;
+        }
+      });
+      // Load the stream
+      try {
+        console.log(`Loading stream: ${channelstreamInfo.streamUrl}`);
+        await player.load(channelstreamInfo.streamUrl);
+        console.log('Stream loaded successfully.');
+      } catch (error) {
+        console.error("Error loading stream:", error);
+      }
+    }
+    // Toggle Play/Pause
+    // Toggle Play/Pause
+    // Stream button functionality
+    const streamButton = document.querySelector('.stream-button');
+    const playIcon = streamButton.querySelector('.play-icon');
+    const pauseIcon = streamButton.querySelector('.pause-icon');
+
+    function toggleStream() {
+      const shakaPlayPauseButton = document.querySelector('.shaka-play-button');
+      shakaPlayPauseButton.click();
+    }
+    // Update play/pause icons when video state changes
+    video.addEventListener('play', () => {
+      playIcon.style.display = 'none'; // Hide Play icon
+      pauseIcon.style.display = ''; // Show Pause icon (restore default)
+    });
+    video.addEventListener('pause', () => {
+      playIcon.style.display = ''; // Show Play icon (restore default)
+      pauseIcon.style.display = 'none'; // Hide Pause icon
+    });
+    // Seek Backward
+    function seekBackward() {
+      const video = document.getElementById('video');
+      if (!video) return;
+      video.currentTime = Math.max(0, video.currentTime - 5);
+    }
+    // Seek Forward
+    function seekForward() {
+      const video = document.getElementById('video');
+      if (!video) return;
+      video.currentTime = Math.min(video.duration, video.currentTime + 5);
+    }
+    let reloadTimeout = null;
+    async function reloadStream() {
+      console.log('Reload requested...');
+      // Clear any pending reload
+      if (reloadTimeout) {
+        console.log('Canceling previous reload request');
+        clearTimeout(reloadTimeout);
+      }
+      // Immediate cleanup
+      if (player) {
+        console.log('Cleaning up existing player...');
+        if (ui) {
+          await ui.destroy();
+          ui = null;
+        }
+        await player.destroy();
+        player = null;
+      }
+      // Debounced initialization
+      reloadTimeout = setTimeout(async () => {
+        console.log('Debounce timer complete, initializing new player...');
+        await initializePlayer();
+        console.log('Player reinitialized successfully');
+        reloadTimeout = null;
+      }, 500);
+    }
+
+    function endStream() {
+      if (player) {
+        player.unload().then(() => {
+          console.log('Stream ended and unloaded');
+        }).catch((error) => {
+          console.error('Error ending stream:', error);
+        });
+      }
+    }
+    // Toggle Fullscreen for the Page 
+    function toggleFullScreen() {
+      if (!document.documentElement) return; // Ensure we have access to documentElement
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.mozRequestFullScreen) { // Firefox
+          document.mozRequestFullScreen();
+        } else if (document.webkitRequestFullscreen) { // Chrome, Safari and Opera
+          document.webkitRequestFullscreen();
+        } else if (document.msRequestFullscreen) { // IE/Edge
+          document.msRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+          document.msExitFullscreen();
+        }
+      }
+    }
+    // Toggle Fullscreen for the Page - Landscape
+    function toggleFullScreenLandscape() {
+      if (!document.fullscreenElement) {
+        // Request fullscreen first
+        let elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen().then(() => {
+            lockOrientation();
+          }).catch(err => console.warn('Fullscreen request failed:', err));
+        } else if (elem.mozRequestFullScreen) { // Firefox
+          elem.mozRequestFullScreen();
+          lockOrientation();
+        } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+          elem.webkitRequestFullscreen();
+          lockOrientation();
+        } else if (elem.msRequestFullscreen) { // IE/Edge
+          elem.msRequestFullscreen();
+          lockOrientation();
+        }
+      } else {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+          document.msExitFullscreen();
+        }
+      }
+    }
+
+    function lockOrientation() {
+      if (screen.orientation && screen.orientation.lock) {
+        screen.orientation.lock('landscape').catch(error => {
+          console.warn('Unable to lock screen orientation:', error);
+        });
+      } else {
+        console.warn('Screen Orientation API not supported');
+      }
+    }
+    // Toggle Fullscreen for the video
+    function toggleFullScreenVideo() {
+      const shakaFullscreenButton = document.querySelector('.shaka-fullscreen-button');
+      if (shakaFullscreenButton) {
+        shakaFullscreenButton.click(); // Simulate click on Shaka's fullscreen button
+      }
+    }
+
+    // Initialize everything when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      initializePlayer().catch(error => {
+        console.error('Error during player initialization:', error);
+      });
+    });
+  </script>
+</body>
+</html>
